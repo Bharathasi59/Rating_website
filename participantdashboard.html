@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participant Dashboard</title>
+  <link rel="stylesheet" href="participantdashboard.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Participant Dashboard</h1>
+    <button id="generate-qrcode">Generate QR Code</button>
+    <div id="qrcode-container"></div>
+
+    <h2>Visitor Reviews</h2>
+    <table id="reviews-table">
+      <thead>
+        <tr>
+          <th>Visitor Name</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script></script>
+</body>
+</html>
+
+  <script>
+    document.getElementById("generate-qrcode").addEventListener("click", generateQRCode);
+
+function generateQRCode() {
+  const uniqueID = generateUniqueID();
+  const participantDetails = {
+    name: "John Doe", 
+    email: "john@example.com", 
+    teamLeader: "John Doe", 
+    teamMembers: ["Alice", "Bob", "Charlie"]
+  };
+  localStorage.setItem(uniqueID, JSON.stringify(participantDetails));
+  const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${window.location.origin}/details.html?id=${uniqueID}`;
+  const qrCodeContainer = document.getElementById("qrcode-container");
+  qrCodeContainer.innerHTML = `<img src="${qrCodeURL}" alt="QR Code">`;
+}
+
+function generateUniqueID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", displayReviews);
+
+function displayReviews() {
+  const projectId = "your-unique-project-id";
+  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const tableBody = document.querySelector("#reviews-table tbody");
+
+
+  tableBody.innerHTML = "";
+
+
+  const projectReviews = reviews.filter((review) => review.projectId === projectId);
+  projectReviews.forEach((review) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${review.visitorName}</td>
+      <td>${"⭐".repeat(review.rating)}</td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+
+  </script>
+</body>
+</html>

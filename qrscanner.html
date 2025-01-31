@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Scanner</title>
+  <link rel="stylesheet" href="qrscanner.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Scan QR Code</h1>
+    <video id="preview"></video>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/instascan/1.0.0/instascan.min.js"></script>
+  <script>
+    let scanner = new Instascan.Scanner({ video: document.getElementById("preview") });
+
+scanner.addListener("scan", function (content) {
+  window.location.href = `reviewpage.html?id=${content}`;
+});
+
+Instascan.Camera.getCameras()
+  .then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0]);
+    } else {
+      alert("No cameras found!");
+    }
+  })
+  .catch(function (e) {
+    console.error(e);
+  });
+
+  </script>
+</body> 
+</html>

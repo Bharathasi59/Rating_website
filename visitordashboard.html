@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Dashboard</title>
+  <link rel="stylesheet" href="visitordashboard.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Visitor Dashboard</h1>
+    <button id="scan-qr-button">Scan QR Code</button>
+  </div>
+
+  <script>
+    document.getElementById("scan-qr-button").addEventListener("click", () => {
+        window.location.href = "qrscanner.html";
+      });      
+  </script>
+</body>
+</html>

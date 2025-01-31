@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Innovation Day</h1>
+    <div class="tabs">
+      <button id="visitor-tab" class="active" onclick="showForm('visitor')">Visitor Register</button>
+      <button id="participant-tab" onclick="showForm('participant')">Participant Register</button>
+    </div>
+    <form id="visitor-form" class="form active" onsubmit="redirectToDashboard(event, 'visitor')">
+      <h2>Visitor Registration</h2>
+      <input type="text" id="visitor-name" placeholder="Name" required>
+      <input type="email" id="visitor-email" placeholder="Email" required>
+      <input type="password" id="visitor-password" placeholder="Password" required>
+      <input type="password" id="visitor-confirm-password" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <form id="participant-form" class="form" onsubmit="redirectToDashboard(event, 'participant')">
+      <h2>Participant Registration</h2>
+      <input type="text" id="participant-name" placeholder="Name" required>
+      <input type="email" id="participant-email" placeholder="Email" required>
+      <input type="password" id="participant-password" placeholder="Password" required>
+      <input type="password" id="participant-confirm-password" placeholder="Confirm Password" required>
+      <input type="text" id="team-leader" placeholder="Team Leader Name" required>
+      <select id="team-size" onchange="addTeamFields()" required>
+        <option value="">Select Number of Team Members</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <div id="team-members"></div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function showForm(type) {
+        const visitorForm = document.getElementById("visitor-form");
+        const participantForm = document.getElementById("participant-form");
+      
+        const visitorTab = document.getElementById("visitor-tab");
+        const participantTab = document.getElementById("participant-tab");
+      
+        if (type === "visitor") {
+          visitorForm.classList.add("active");
+          participantForm.classList.remove("active");
+          visitorTab.classList.add("active");
+          participantTab.classList.remove("active");
+        } else {
+          participantForm.classList.add("active");
+          visitorForm.classList.remove("active");
+          participantTab.classList.add("active");
+          visitorTab.classList.remove("active");
+        }
+      }
+      
+      function addTeamFields() {
+        const teamSize = document.getElementById("team-size").value;
+        const teamMembersDiv = document.getElementById("team-members");
+        teamMembersDiv.innerHTML = "";
+      
+        for (let i = 1; i <= teamSize; i++) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = `Team Member ${i} Name`;
+          input.required = true;
+          input.className = "team-member-input";
+          teamMembersDiv.appendChild(input);
+        }
+      }
+      
+      function redirectToDashboard(event, type) {
+        event.preventDefault();
+      
+        if (type === "visitor") {
+          window.location.href = "visitordashboard.html";
+        } else if (type === "participant") {
+          window.location.href = "participantdashboard.html";
+        }
+      }
+      
+  </script>
+</body>
+</html>

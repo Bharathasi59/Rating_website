@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participant Details</title>
+  <link rel="stylesheet" href="participantdetails.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Participant Details</h1>
+    <div id="details-container">
+    </div>
+  </div>
+
+  <script>
+const urlParams = new URLSearchParams(window.location.search);
+const uniqueID = urlParams.get("id");
+
+const participantDetails = JSON.parse(localStorage.getItem(uniqueID));
+
+if (participantDetails) {
+  const detailsContainer = document.getElementById("details-container");
+  detailsContainer.innerHTML = `
+    <p><strong>Name:</strong> ${participantDetails.name}</p>
+    <p><strong>Email:</strong> ${participantDetails.email}</p>
+    <p><strong>Team Leader:</strong> ${participantDetails.teamLeader}</p>
+    <p><strong>Team Members:</strong> ${participantDetails.teamMembers.join(", ")}</p>
+  `;
+} else {
+  document.getElementById("details-container").innerHTML = "<p>Details not found.</p>";
+}
+
+  </script>
+</body>
+</html>
